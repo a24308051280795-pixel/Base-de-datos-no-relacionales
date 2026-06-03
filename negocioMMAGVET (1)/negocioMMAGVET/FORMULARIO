@@ -1,1 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinaria Patitas - Gestión Completa</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <style>
+        :root {
+            --amarillo-claro: #FFF9C4;
+            --cafe: #5D4037;
+            --naranja: #F57C00;
+            --naranja-hover: #E65100;
+            --blanco: #FFFFFF;
+            --beige: #FFFDF9;
+            --fondo: #F8F5F0;
+            --borde: #E0D7CD;
+            --texto-secundario: #8D6E63;
+        }
 
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--fondo);
+            color: var(--cafe);
+        }
+
+        header {
+            background-color: var(--amarillo-claro);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 6px solid var(--naranja);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo-header {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 3em;
+            color: var(--cafe);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+        }
+
+        nav {
+            background-color: var(--cafe);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            padding: 18px 28px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover { 
+            background-color: var(--naranja); 
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: var(--blanco);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(93, 64, 55, 0.08);
+            border-left: 12px solid var(--amarillo-claro);
+        }
+
+        .seccion-v { display: none; animation: fadeIn 0.5s ease-out; }
+        .activa { display: block !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--cafe);
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed var(--borde);
+            padding-bottom: 10px;
+        }
+
+        /* INICIO */
+        .inicio-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
+        .bienvenida h2 { color: var(--naranja); font-size: 2.2em; border: none; padding: 0; }
+        .card-info { 
+            background-color: var(--beige); 
+            padding: 30px; 
+            border-radius: 18px; 
+            border: 1px solid var(--borde); 
+            box-shadow: 4px 4px 0px var(--amarillo-claro); 
+        }
+        .card-info h3 { margin-top: 0; color: var(--cafe); }
+        .card-info ul { padding-left: 20px; }
+        .card-info li { margin-bottom: 10px; }
+
+        footer { 
+            background-color: var(--cafe); 
+            color: var(--blanco); 
+            text-align: center; 
+            padding: 35px 20px; 
+            margin-top: 80px; 
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* FORMULARIOS REDISEÑADOS */
+        .form-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; }
+        .form-panel { display: flex; flex-direction: column; gap: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        @media (max-width: 768px) {
+            .inicio-grid, .form-grid, .form-row { grid-template-columns: 1fr; }
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label {
+            font-size: 12px;
+            color: var(--texto-secundario);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--borde);
+            border-radius: 12px;
+            font-size: 15px;
+            background: var(--beige);
+            color: var(--cafe);
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--naranja);
+            background: var(--blanco);
+            box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.15);
+        }
+        
+        .form-group ::placeholder { color: #BCAAA4; }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--cafe);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title i {
+            background: linear-gradient(135deg, var(--naranja) 0%, #FFB74D 100%);
+            color: white;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PANEL LATERAL */
+        .side-panel {
+            background: linear-gradient(180deg, var(--blanco) 0%, var(--fondo) 100%);
+            border-radius: 24px;
+            padding: 35px 25px;
+            border: 2px dashed var(--borde);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            align-self: start;
+        }
+        
+        .mascota-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--blanco);
+            border: 4px solid var(--amarillo-claro);
+            box-shadow: 0 8px 20px rgba(93, 64, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .mascota-circle:hover { transform: scale(1.03); }
+        .mascota-circle img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .side-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--amarillo-claro);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--naranja);
+            font-size: 32px;
+        }
+        
+        .side-panel h3 { font-size: 18px; margin: 0 0 10px; font-weight: 700; color: var(--cafe); }
+        .side-panel p { font-size: 14px; color: var(--texto-secundario); margin: 0; }
+        
+        .badge-pronto {
+            margin-top: 20px;
+            padding: 8px 18px;
+            background: #FFF3E0;
+            border-radius: 20px;
+            border: 1px solid rgba(245, 124, 0, 0.3);
+            font-size: 11px;
+            color: var(--naranja);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* BOTONES ACCIONES */
+        .form-actions {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid var(--fondo);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn:active { transform: translateY(0); }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--naranja) 0%, #FF9800 100%);
+            color: white;
+        }
+        .btn-register:hover { background: linear-gradient(135deg, var(--naranja-hover) 0%, var(--naranja) 100%); }
+        
+        .btn-search { background: #E0F2F1; border: 2px solid #00695C !important; color: #00695C; }
+        .btn-search:hover { background: #B2DFDB; }
+        
+        .btn-delete { background: #FFEBEE; border: 2px solid #C0392B !important; color: #C0392B; }
+        .btn-delete:hover { background: #FFCDD2; }
+        
+        .btn-edit { background: var(--fondo); border: 2px solid var(--cafe) !important; color: var(--cafe); }
+        .btn-edit:hover { background: var(--borde); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Logo Veterinaria Patitas" class="logo-header">
+        <h1>VETERINARIA PATITAS</h1>
+    </header>
+
+    <nav>
+        <a onclick="ver('inicio')">Inicio</a>
+        <a onclick="ver('pacientes')">Pacientes</a>
+        <a onclick="ver('insumos')">Insumos</a>
+        <a onclick="ver('veterinarios')">Veterinarios</a>
+        <a onclick="ver('clientes')">Clientes</a>
+        <a onclick="ver('consultas')">Consultas</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- INICIO -->
+        <div id="inicio" class="seccion-v activa">
+            <div class="inicio-grid">
+                <div class="bienvenida">
+                    <h2>Nuestra Veterinaria</h2>
+                    <p>Bienvenido a <b>nuestra Veterinaria Patitas</b>, donde la salud y la alegría se encuentran. Somos una clínica especializada en brindar servicios médicos de alta calidad para los miembros más peludos de tu familia.</p>
+                    <div class="card-info">
+                        <h3>¿Por qué elegirnos?</h3>
+                        <ul>
+                            <li>Atención personalizada para Animales Domésticos.</li>
+                            <li>Especialistas altamente calificados.</li>
+                            <li>Farmacia interna con todos los insumos necesarios.</li>
+                            <li>Ambiente cálido, seguro y amigable.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="card-info">
+                        <h3>📍 Ubicación y Contacto</h3>
+                        <p>Avenida de las Huellitas #456, Colonia Mascotas</p>
+                        <p><b>Tel:</b> (555) 123-4567</p>
+                        <p><b>Horario:</b> Lun-Vie 9am-7pm / Sáb 10am-4pm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PACIENTES -->
+        <div id="pacientes" class="seccion-v">
+            <h2>Colección: Pacientes</h2>
+            <div class="form-grid">
+                <div class="form-panel">
+                    <p class="section-title"><i class="ti ti-user-plus"></i> Registro de paciente</p>
+                    <div class="form-group">
+                        <label>ID del paciente</label>
+                        <input type="text" placeholder="Ej: P-11">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" placeholder="Ej: Copito">
+                        </div>
+                        <div class="form-group">
+                            <label>Especie</label>
+                            <select id="select-especie" onchange="updateMascotaImage()">
+                                <option value="perro">Perro</option>
+                                <option value="gato">Gato</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Raza</label>
+                            <input type="text" placeholder="Ej: Siamés">
+                        </div>
+                        <div class="form-group">
+                            <label>Color</label>
+                            <input type="text" placeholder="Ej: Blanco">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sexo</label>
+                            <select>
+                                <option value="">Seleccionar</option>
+                                <option>Macho</option>
+                                <option>Hembra</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Castrado</label>
+                            <select>
+                                <option value="">Seleccionar</option>
+                                <option>Sí</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        <input type="date">
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="mascota-circle">
+                        <img id="img-mascota" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&auto=format&fit=crop&q=80" alt="Mascota">
+                    </div>
+                    <h3>Panel de búsqueda</h3>
+                    <p>Los resultados aparecerán aquí</p>
+                    <div class="badge-pronto">Próximamente disponible</div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-search"><i class="ti ti-search"></i> Buscar</button>
+                <button class="btn btn-register"><i class="ti ti-user-plus"></i> Registrar</button>
+                <button class="btn btn-delete"><i class="ti ti-trash"></i> Eliminar</button>
+                <button class="btn btn-edit"><i class="ti ti-edit"></i> Editar</button>
+            </div>
+        </div>
+
+        <!-- INSUMOS -->
+        <div id="insumos" class="seccion-v">
+            <h2>Colección: Insumos</h2>
+            <div class="form-grid">
+                <div class="form-panel">
+                    <p class="section-title"><i class="ti ti-box"></i> Registro de Insumos</p>
+                    <div class="form-group">
+                        <label>ID del Insumo</label>
+                        <input type="text" placeholder="Ej: M-17">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre del Producto</label>
+                            <input type="text" placeholder="Ej: Amoxicilina">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select>
+                                <option>Antibiótico</option>
+                                <option>Biológico</option>
+                                <option>Antiparasitario</option>
+                                <option>Desparasitante</option>
+                                <option>Insumo</option>
+                                <option>Desinfectante</option>
+                                <option>Diagnóstico</option>
+                                <option>Instrumental</option>
+                                <option>Solución</option>
+                                <option>Analgésico</option>
+                                <option>Antifúngico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Presentación</label>
+                            <input type="text" placeholder="Ej: Pastilla / 1ml vial">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" placeholder="Ej: 50">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Concentración</label>
+                            <input type="text" placeholder="Ej: 250mg">
+                        </div>
+                        <div class="form-group">
+                            <label>Caducidad</label>
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato</label>
+                        <input type="text" placeholder="Ej: Pastilla / Líquido / Vial">
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="side-icon"><i class="ti ti-search"></i></div>
+                    <h3>Panel de búsqueda</h3>
+                    <p>Los resultados aparecerán aquí</p>
+                    <div class="badge-pronto">Próximamente disponible</div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-search"><i class="ti ti-search"></i> Buscar</button>
+                <button class="btn btn-register"><i class="ti ti-plus"></i> Registrar</button>
+                <button class="btn btn-delete"><i class="ti ti-trash"></i> Eliminar</button>
+                <button class="btn btn-edit"><i class="ti ti-edit"></i> Editar</button>
+            </div>
+        </div>
+
+        <!-- VETERINARIOS -->
+        <div id="veterinarios" class="seccion-v">
+            <h2>Colección: Veterinarios</h2>
+            <div class="form-grid">
+                <div class="form-panel">
+                    <p class="section-title"><i class="ti ti-stethoscope"></i> Registro de Veterinarios</p>
+                    <div class="form-group">
+                        <label>ID del Veterinario</label>
+                        <input type="text" placeholder="Ej: V-11">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" placeholder="Ej: Dr. García">
+                        </div>
+                        <div class="form-group">
+                            <label>Especialidad</label>
+                            <select>
+                                <option>Canino</option>
+                                <option>Felino</option>
+                                <option>Cirugía</option>
+                                <option>General</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Turno</label>
+                            <select>
+                                <option>Matutino</option>
+                                <option>Vespertino</option>
+                                <option>Mixto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Horario</label>
+                            <input type="text" placeholder="Ej: 9am-2pm">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" placeholder="Ej: 656 000 0000">
+                        </div>
+                        <div class="form-group">
+                            <label>Licencia (COL)</label>
+                            <input type="text" placeholder="Ej: COL-911">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>RFC</label>
+                        <input type="text" placeholder="Ej: XXXX000000XX0">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" placeholder="Ej: Av. Tecnológico 2540">
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="side-icon"><i class="ti ti-search"></i></div>
+                    <h3>Panel de búsqueda</h3>
+                    <p>Los resultados aparecerán aquí</p>
+                    <div class="badge-pronto">Próximamente disponible</div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-search"><i class="ti ti-search"></i> Buscar</button>
+                <button class="btn btn-register"><i class="ti ti-plus"></i> Registrar</button>
+                <button class="btn btn-delete"><i class="ti ti-trash"></i> Eliminar</button>
+                <button class="btn btn-edit"><i class="ti ti-edit"></i> Editar</button>
+            </div>
+        </div>
+
+        <!-- CLIENTES -->
+        <div id="clientes" class="seccion-v">
+            <h2>Colección: Clientes</h2>
+            <div class="form-grid">
+                <div class="form-panel">
+                    <p class="section-title"><i class="ti ti-users"></i> Registro de Clientes</p>
+                    <div class="form-group">
+                        <label>ID del Cliente</label>
+                        <input type="text" placeholder="Ej: 0011">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre del Propietario</label>
+                            <input type="text" placeholder="Ej: María García">
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" placeholder="Ej: 656 989 0011">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" placeholder="Ej: maria@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" placeholder="Ej: Alamos #7282">
+                    </div>
+                    <div class="form-group">
+                        <label>ID de Mascota</label>
+                        <input type="text" placeholder="Ej: P-11">
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="side-icon"><i class="ti ti-search"></i></div>
+                    <h3>Panel de búsqueda</h3>
+                    <p>Los resultados aparecerán aquí</p>
+                    <div class="badge-pronto">Próximamente disponible</div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-search"><i class="ti ti-search"></i> Buscar</button>
+                <button class="btn btn-register"><i class="ti ti-plus"></i> Registrar</button>
+                <button class="btn btn-delete"><i class="ti ti-trash"></i> Eliminar</button>
+                <button class="btn btn-edit"><i class="ti ti-edit"></i> Editar</button>
+            </div>
+        </div>
+
+        <!-- CONSULTAS -->
+        <div id="consultas" class="seccion-v">
+            <h2>Colección: Consultas</h2>
+            <div class="form-grid">
+                <div class="form-panel">
+                    <p class="section-title"><i class="ti ti-notes"></i> Registro de Consultas</p>
+                    <div class="form-group">
+                        <label>ID de la Consulta</label>
+                        <input type="text" placeholder="Ej: C-11">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ID Paciente</label>
+                            <input type="text" placeholder="Ej: P-01">
+                        </div>
+                        <div class="form-group">
+                            <label>ID Veterinario</label>
+                            <input type="text" placeholder="Ej: V-01">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Peso (kg)</label>
+                            <input type="number" placeholder="Ej: 6">
+                        </div>
+                        <div class="form-group">
+                            <label>Temperatura (°C)</label>
+                            <input type="number" step="0.1" placeholder="Ej: 38.5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Motivo de Consulta</label>
+                        <input type="text" placeholder="Ej: Otitis moderada">
+                    </div>
+                    <div class="form-group">
+                        <label>Tratamiento</label>
+                        <textarea placeholder="Describe el tratamiento indicado..."></textarea>
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="side-icon"><i class="ti ti-search"></i></div>
+                    <h3>Panel de búsqueda</h3>
+                    <p>Los resultados aparecerán aquí</p>
+                    <div class="badge-pronto">Próximamente disponible</div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-search"><i class="ti ti-search"></i> Buscar</button>
+                <button class="btn btn-register"><i class="ti ti-plus"></i> Registrar</button>
+                <button class="btn btn-delete"><i class="ti ti-trash"></i> Eliminar</button>
+                <button class="btn btn-edit"><i class="ti ti-edit"></i> Editar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><b>Alumno:</b> Arzapala Guerrero Mia Marina | <b>No. de Control:</b> 24308051280795</p>
+        <p>© 2025 Veterinaria Patitas | Grupo 4J Programación</p>
+    </footer>
+
+    <script>
+        function ver(id) {
+            document.querySelectorAll('.seccion-v').forEach(s => s.classList.remove('activa'));
+            document.getElementById(id).classList.add('activa');
+        }
+
+        function updateMascotaImage() {
+            const especie = document.getElementById('select-especie').value;
+            const imgElement = document.getElementById('img-mascota');
+            if (especie === 'perro') {
+                imgElement.src = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&auto=format&fit=crop&q=80";
+            } else {
+                imgElement.src = "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&auto=format&fit=crop&q=80";
+            }
+        }
+    </script>
+</body>
+</html>
